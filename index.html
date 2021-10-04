@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link type="text/css" href="style.css" />
+    <title>ChartJS Bar Chart</title>
+    <style>
+      .label-hover:hover {
+        background-color: green;
+      }
+
+      .tooltip {
+        position: absolute;
+        margin: 5px;
+        width: 200px;
+        height: 50px;
+        border: 1px solid black;
+        display: none;
+        background-color: grey;
+      }
+
+      .tooltip-on {
+        display: block;
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body style="max-width: 100vw; max-height: 100vh">
+    <div style="margin-top: 20px; margin-bottom: 20px">
+      <input
+        type="number"
+        id="chart-width"
+        min="50"
+        max="100"
+        value="100"
+        step="1"
+        style="height: 40px; width 50px;"
+      />
+      <label
+        for="volume"
+        id="width-value"
+        style="font: 1rem 'Fira Sans', sans-serif"
+        >Chart width: 50% to 100%</label
+      >
+    </div>
+    <!-- <div style="margin-top: 20px; margin-bottom: 20px">
+      <input
+        type="number"
+        id="legend-width"
+        min="10"
+        max="30"
+        value="10"
+        step="1"
+        style="height: 40px; width 50px;"
+      /> -->
+      <!-- <label
+        for="volume"
+        id="width-value"
+        style="font: 1rem 'Fira Sans', sans-serif"
+        >Legend width: 10% to 20%</label
+      > -->
+    </div>
+    <div class="main-container">
+      <div class="chart-container">
+        <canvas id="chart"></canvas>
+        <div class="x-axis-container"></div>
+      </div>
+      <!-- <div class="legend-container"></div> -->
+    </div>
+  </body>
+</html>
