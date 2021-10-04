@@ -18,7 +18,7 @@ let direction = DIRECTION.VERTICAL;
 
 let graphWidth = 100;
 
-const labels = ['Canada', 'France', 'Italy', 'USA'];
+const labels = ['Canada', 'France', 'Italy', 'USAUSAUSA USA USA'];
 const images = [
   'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg/324px-Tour_Eiffel_Wikimedia_Commons.jpg',
   'https://www.countryflags.com/wp-content/uploads/france-flag-png-large.png',
@@ -55,7 +55,7 @@ const chartContainerStyle = `
 `;
 
 const labelStyles = ` margin-top: 8px; text-overflow: ellipsis;
-                      overflow: hidden;`;
+                      overflow: hidden; max-width: ${BAR_WIDTH_XL}px;`;
 
 const legendStyle = `border: 1px dashed orange; display: flex; flex-direction: column;
     justify-content: space-between; overflow-y: auto; word-break: break-all;
@@ -161,8 +161,9 @@ const inputWidth = document.getElementById('chart-width') as HTMLInputElement;
 
 const addTooltips = () => {
   if (!shouldDrawTooltips) return;
-  const yAxisLabels = document.querySelectorAll('#yAxis-label');
-  yAxisLabels.forEach((yAxisLabel, index, parent) => {
+  console.log('addTooltips');
+  const xAxisLabels = document.querySelectorAll('#xAxis-label');
+  xAxisLabels.forEach((yAxisLabel, index) => {
     if (yAxisLabel.clientWidth < yAxisLabel.scrollWidth) {
       const tooltipElement = document.createElement('div');
       tooltipElement.setAttribute('class', 'tooltip');
@@ -261,9 +262,8 @@ const addImages = (chart: Chart) => {
         `
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
-        height: ${200}px;
         overflow: hidden;
         `
       );
@@ -305,7 +305,7 @@ const addImages = (chart: Chart) => {
 
       const labelElement = document.createElement('label');
       labelElement.textContent = dataLabels[index];
-      labelElement.setAttribute('id', 'yAxis-label');
+      labelElement.setAttribute('id', 'xAxis-label');
       labelElement.setAttribute('style', labelStyles);
 
       divContainer.appendChild(imgContainer);
