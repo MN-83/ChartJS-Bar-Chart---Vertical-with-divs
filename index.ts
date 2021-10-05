@@ -31,8 +31,8 @@ const barColors = ['#00BBE6', '#1B2C8F', '#D85E5E', '#DEB454'];
 let imagesSize = [
   { width: 324, height: 600 },
   { width: 1000, height: 667 },
-  { width: 1000, height: 667 },
-  { width: 728, height: 256 },
+  // { width: 1000, height: 667 },
+  // { width: 728, height: 256 },
 ];
 
 let dataLabels = labels;
@@ -84,7 +84,7 @@ const data = {
   datasets: [
     {
       data: dataValues,
-      barThickness: BAR_WIDTH_S,
+      barThickness: BAR_WIDTH_XL,
       backgroundColor: barColors,
     },
   ],
@@ -222,41 +222,6 @@ const addImages = (chart: Chart) => {
     }
 
     xAxis.ticks.forEach((tick, index) => {
-      const image = new Image();
-      image.src = dataImages[index];
-
-      let imageWidth, imageHeight;
-
-      let ratio = imagesSize[index].width / imagesSize[index].height;
-      const xTick = xAxis.getPixelForTick(index);
-
-      barHeight = BAR_WIDTH_XL;
-
-      const imageX = x;
-      let imageY = xTick - barHeight / 2;
-      const rectY = imageY;
-      const textY = imageY + barHeight + distanceBetweenBars / 8;
-
-      let emptyHeight = 0;
-
-      if (ratio >= 1) {
-        imageHeight = availableSpaceForXAxisLabels / ratio;
-        imageWidth = availableSpaceForXAxisLabels;
-        emptyHeight = barHeight - imageHeight;
-
-        if (emptyHeight < 0) {
-          imageHeight = barHeight;
-          imageWidth = barHeight * ratio;
-        }
-
-        if (emptyHeight > 0) {
-          imageY = imageY + emptyHeight / 2;
-        }
-      } else if (ratio < 1) {
-        imageHeight = barHeight;
-        imageWidth = barHeight * ratio;
-      }
-
       const divContainer = document.createElement('div');
       divContainer.setAttribute(
         'style',
@@ -269,29 +234,67 @@ const addImages = (chart: Chart) => {
         `
       );
 
-      const imgContainer = document.createElement('div');
-      imgContainer.setAttribute(
-        'style',
+      if (imagesSize.length > index) {
+        const image = new Image();
+        image.src = dataImages[index];
+
+        let imageWidth, imageHeight;
+
+        let ratio = imagesSize[index].width / imagesSize[index].height;
+        const xTick = xAxis.getPixelForTick(index);
+
+        barHeight = BAR_WIDTH_XL;
+
+        const imageX = x;
+        let imageY = xTick - barHeight / 2;
+        const rectY = imageY;
+        const textY = imageY + barHeight + distanceBetweenBars / 8;
+
+        let emptyHeight = 0;
+
+        if (ratio >= 1) {
+          imageHeight = availableSpaceForXAxisLabels / ratio;
+          imageWidth = availableSpaceForXAxisLabels;
+          emptyHeight = barHeight - imageHeight;
+
+          if (emptyHeight < 0) {
+            imageHeight = barHeight;
+            imageWidth = barHeight * ratio;
+          }
+
+          if (emptyHeight > 0) {
+            imageY = imageY + emptyHeight / 2;
+          }
+        } else if (ratio < 1) {
+          imageHeight = barHeight;
+          imageWidth = barHeight * ratio;
+        }
+
+        const imgContainer = document.createElement('div');
+        imgContainer.setAttribute(
+          'style',
+          `
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: ${AVAILABLE_AREA};
+          width: ${availableSpaceForXAxisLabels}px;
+          height: ${availableSpaceForXAxisLabels}px;
+          min-height: ${availableSpaceForXAxisLabels}px;
         `
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: ${AVAILABLE_AREA};
-        width: ${availableSpaceForXAxisLabels}px;
-        height: ${availableSpaceForXAxisLabels}px;
-        min-height: ${availableSpaceForXAxisLabels}px;
-      `
-      );
+        );
 
-      const imgElement = document.createElement('img');
-      imgElement.src = dataImages[index];
-      imgElement.setAttribute(
-        'style',
-        `height:${imageHeight}px; width:${imageWidth}px;`
-      );
+        const imgElement = document.createElement('img');
+        imgElement.src = dataImages[index];
+        imgElement.setAttribute(
+          'style',
+          `height:${imageHeight}px; width:${imageWidth}px;`
+        );
 
-      imgContainer.appendChild(imgElement);
+        imgContainer.appendChild(imgElement);
+        divContainer.appendChild(imgContainer);
+      }
 
       const availableAreaElement = document.createElement('div');
       availableAreaElement.setAttribute(
@@ -307,9 +310,11 @@ const addImages = (chart: Chart) => {
       const labelElement = document.createElement('label');
       labelElement.textContent = dataLabels[index];
       labelElement.setAttribute('id', 'xAxis-label');
-      labelElement.setAttribute('style', labelStyles);
+      labelElement.setAttribute(
+        'style',
+        `${labelStyles}; min-width: ${availableSpaceForXAxisLabels}px; text-align: center;`
+      );
 
-      divContainer.appendChild(imgContainer);
       divContainer.appendChild(labelElement);
 
       xAxisContainer.appendChild(divContainer);
