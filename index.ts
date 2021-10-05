@@ -39,12 +39,12 @@ let dataLabels = labels;
 let dataImages = images;
 let dataValues = values;
 
-(function moreData() {
-  dataLabels = [...labels, ...labels, ...labels, ...labels];
-  dataImages = [...images, ...images, ...images, ...images];
-  dataValues = [...values, ...values, ...values, ...values];
-  imagesSize = [...imagesSize, ...imagesSize, ...imagesSize, ...imagesSize];
-})();
+// (function moreData() {
+//   dataLabels = [...labels, ...labels, ...labels, ...labels];
+//   dataImages = [...images, ...images, ...images, ...images];
+//   dataValues = [...values, ...values, ...values, ...values];
+//   imagesSize = [...imagesSize, ...imagesSize, ...imagesSize, ...imagesSize];
+// })();
 
 const mainContainerStyle = `display: flex; width: 100%;`;
 
@@ -202,7 +202,8 @@ const addImages = (chart: Chart) => {
     flex-direction: row;
     border: 1px dashed green;
     justify-content: space-around;
-    padding-left: ${Math.trunc(x)}px;`
+    padding-left: ${Math.trunc(x)}px;
+    margin-top: -10px;`
   );
 
   let barHeight = chart.getDatasetMeta(0).data[0]['height'];
